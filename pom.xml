@@ -19,7 +19,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <arch.version>1.0-SNAPSHOT</arch.version>
         <cyan-employee.version>1.0-SNAPSHOT</cyan-employee.version>
-        <mybatis.plus.version>3.5.7</mybatis.plus.version>
     </properties>
 
     <dependencyManagement>
@@ -35,11 +34,6 @@
                 <groupId>com.cyan</groupId>
                 <artifactId>cyan-employee-client</artifactId>
                 <version>${cyan-employee.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-                <version>${mybatis.plus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
