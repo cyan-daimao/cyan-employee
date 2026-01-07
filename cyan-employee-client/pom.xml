@@ -25,16 +25,11 @@
         </dependency>
         <dependency>
             <groupId>com.cyan</groupId>
-            <artifactId>arch-base</artifactId>
+            <artifactId>arch-common</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <!-- 若用 Spring Cloud Alibaba，需引入适配依赖 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
     </dependencies>
 </project>
