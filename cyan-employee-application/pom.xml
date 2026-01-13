@@ -61,6 +61,7 @@
     </dependencies>
 
     <build>
+        <finalName>cyan-employee</finalName>
         <plugins>
             <!-- 核心JAR打包插件（自定义JAR名称、排除不必要文件等） -->
             <plugin>
