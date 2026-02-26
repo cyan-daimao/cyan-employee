@@ -4,7 +4,7 @@ import com.cyan.arch.common.api.Response;
 import com.cyan.employee.adapter.http.employee.convert.EmployeeAdapterConvert;
 import com.cyan.employee.application.employee.bo.EmployeeBO;
 import com.cyan.employee.application.login.LoginService;
-import com.cyan.employee.client.EmployeeRPCClient;
+import com.cyan.employee.client.LoginClient;
 import com.cyan.employee.client.dto.EmployeeDTO;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping("/rpc/v1/employee")
-public class EmployeeRPC implements EmployeeRPCClient {
+@RequestMapping("/rpc/v1/login")
+public class LoginRPC implements LoginClient {
 
     private final LoginService loginService;
 
-    public EmployeeRPC(LoginService loginService) {
+    public LoginRPC(LoginService loginService) {
         this.loginService = loginService;
     }
 

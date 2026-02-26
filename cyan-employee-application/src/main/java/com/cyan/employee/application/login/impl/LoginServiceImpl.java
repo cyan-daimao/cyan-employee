@@ -53,7 +53,7 @@ public class LoginServiceImpl implements LoginService {
         }
         try {
             String token = tokenUtils.generateToken(employee.getId());
-            redisTemplate.opsForValue().set(employee.getId(), employee, 30, TimeUnit.DAYS);
+            redisTemplate.opsForValue().set("cyan-employee:"+employee.getId(), employee, 30, TimeUnit.DAYS);
             return token;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -74,7 +74,7 @@ public class LoginServiceImpl implements LoginService {
                 throw new SilentException(tokenParseResult.getMsg());
             }
             String userId = tokenParseResult.getUserId();
-            Employee employee = redisTemplate.opsForValue().get(userId);
+            Employee employee = redisTemplate.opsForValue().get("cyan-employee:"+userId);
             return EmployeeAppConvert.INSTANCE.toEmployeeBO(employee);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.cyan"})
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.cyan.employee.client") // 指向EmployeeRPCClient所在包
+@EnableFeignClients(basePackages = "com.cyan.employee.client")
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
