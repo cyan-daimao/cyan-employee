@@ -88,6 +88,7 @@ public class TokenUtils {
      * 解析并校验Token
      */
     public TokenParseResult parseAndVerifyToken(String token) throws Exception {
+        token = token.replaceAll("Bearer ", "");
         TokenParseResult result = new TokenParseResult();
 
         // 1. 校验Token格式
