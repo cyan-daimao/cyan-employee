@@ -4,6 +4,7 @@ import com.cyan.arch.common.api.Response;
 import com.cyan.employee.client.dto.EmployeeDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 员工RPC客户端
@@ -18,5 +19,5 @@ public interface LoginClient {
      * 验证员工Token
      */
     @PostMapping("/verify")
-    Response<EmployeeDTO> verify(String token);
+    Response<EmployeeDTO> verify(@RequestParam("token") String token);
 }
