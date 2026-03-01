@@ -11,6 +11,7 @@
     <modules>
         <module>cyan-employee-application</module>
         <module>cyan-employee-client</module>
+        <module>cyan-employee-login</module>
     </modules>
 
     <properties>
@@ -33,6 +34,11 @@
             <dependency>
                 <groupId>com.cyan</groupId>
                 <artifactId>cyan-employee-client</artifactId>
+                <version>${cyan-employee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cyan</groupId>
+                <artifactId>cyan-employee-login</artifactId>
                 <version>${cyan-employee.version}</version>
             </dependency>
         </dependencies>
