@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Data
-@TableName("t_department")
+@TableName("cyan_department")
 public class DepartmentDO {
     /**
      * 主键

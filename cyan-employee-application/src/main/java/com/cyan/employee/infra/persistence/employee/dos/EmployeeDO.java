@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-@TableName("t_employee")
+@TableName("cyan_employee")
 public class EmployeeDO {
     /**
      * 主键
@@ -33,13 +33,19 @@ public class EmployeeDO {
     private String staffNumber;
 
     /**
+     * 通行证（英文名+工号）
+     */
+    @TableField(value = "passport")
+    private String passport;
+
+    /**
      * 姓名
      */
     @TableField(value = "cn_name")
     private String cnName;
 
     /**
-     * 姓名
+     * 英文名
      */
     @TableField(value = "en_name")
     private String enName;

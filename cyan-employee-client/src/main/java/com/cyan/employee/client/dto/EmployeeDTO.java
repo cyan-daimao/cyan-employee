@@ -34,6 +34,11 @@ public class EmployeeDTO {
     private String enName;
 
     /**
+     * 通行证
+     */
+    private String passport;
+
+    /**
      * 手机
      */
     private String phone;

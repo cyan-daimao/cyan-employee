@@ -32,6 +32,11 @@ public class EmployeeBO {
     private String staffNumber;
 
     /**
+     * 通行证
+     */
+    private String passport;
+
+    /**
      * 员工所属部门
      */
     private List<DepartmentBO> departmentId;
