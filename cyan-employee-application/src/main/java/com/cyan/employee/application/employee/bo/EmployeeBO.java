@@ -27,7 +27,7 @@ public class EmployeeBO {
     private String id;
 
     /**
-     * 职位
+     * 工号
      */
     private String staffNumber;
 

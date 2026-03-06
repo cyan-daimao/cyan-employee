@@ -41,7 +41,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (ErrorCode.SUCCESS.getCode() != resp.getCode()) {
             throw new LoginException(resp.getMessage());
         }
-        RequestContextHolder.getContext().setEmployee(resp.getData()).setToken(token);
+        UserContextHolder.getContext().setEmployee(resp.getData()).setToken(token);
         return true;
     }
 
@@ -60,6 +60,6 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Object handler,
                                 @Nullable Exception ex) throws Exception {
-        RequestContextHolder.clearContext();
+        UserContextHolder.clearContext();
     }
 }

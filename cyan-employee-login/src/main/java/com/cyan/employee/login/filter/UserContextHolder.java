@@ -2,23 +2,23 @@ package com.cyan.employee.login.filter;
 
 import com.cyan.employee.client.dto.EmployeeDTO;
 
-public class RequestContextHolder {
+public class UserContextHolder {
 
-    private static final ThreadLocal<RequestContext> CONTEXT_HOLDER = new ThreadLocal<>();
+    private static final ThreadLocal<UserContext> CONTEXT_HOLDER = new ThreadLocal<>();
 
     /**
      * 私有化构造器，禁止实例化
      */
-    private RequestContextHolder() {
+    private UserContextHolder() {
     }
 
     /**
      * 获取上下文（不存在则创建）
      */
-    public static RequestContext getContext() {
-        RequestContext context = CONTEXT_HOLDER.get();
+    public static UserContext getContext() {
+        UserContext context = CONTEXT_HOLDER.get();
         if (context == null) {
-            context = new RequestContext();
+            context = new UserContext();
             CONTEXT_HOLDER.set(context);
         }
         return context;
