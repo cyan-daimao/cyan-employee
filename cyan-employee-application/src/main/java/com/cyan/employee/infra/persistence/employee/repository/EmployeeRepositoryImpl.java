@@ -62,7 +62,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
      */
     @Override
     public Employee findOne(EmployeeQuery query) {
+        if (query.isEmpty()){
+            return null;
+        }
         LambdaQueryWrapper<EmployeeDO> queryWrapper = new LambdaQueryWrapper<EmployeeDO>()
+                .eq(StrUtils.isNotBlank(query.getPassport()), EmployeeDO::getPassport, query.getPassport())
                 .eq(StrUtils.isNotBlank(query.getEmail()), EmployeeDO::getEmail, query.getEmail())
                 .eq(StrUtils.isNotBlank(query.getPhone()), EmployeeDO::getPhone, query.getPhone());
         EmployeeDO employeeDO = employeeMapper.selectOne(queryWrapper);

@@ -38,4 +38,8 @@ public class EmployeeQuery {
      * 通行证
      */
     private String passport;
+
+    public boolean isEmpty() {
+        return name == null && departmentId == null && email == null && phone == null && passport == null;
+    }
 }
