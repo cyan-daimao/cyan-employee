@@ -10,7 +10,7 @@ import com.cyan.employee.client.query.EmployeeRPCListQuery;
 import com.cyan.employee.client.query.EmployeeRPCQuery;
 import com.cyan.employee.domain.employee.query.EmployeeListQuery;
 import com.cyan.employee.domain.employee.query.EmployeeQuery;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +22,7 @@ import java.util.Optional;
  * @since 1.0.0
  */
 @RestController
+@RequestMapping("/rpc/v1/employees")
 public class EmployeeRPC implements EmployeeClient {
 
     private final EmployeeService employeeService;
@@ -35,6 +36,7 @@ public class EmployeeRPC implements EmployeeClient {
      *
      */
     @Override
+    @GetMapping("/query")
     public EmployeeDTO query(EmployeeRPCQuery query) {
         EmployeeQuery employeeQuery = new EmployeeQuery()
                 .setPassport(query.getPassport());
@@ -47,8 +49,10 @@ public class EmployeeRPC implements EmployeeClient {
      *
      */
     @Override
-    public EmployeeDTO findById(Long id) {
-        return null;
+    @GetMapping("/{id}")
+    public EmployeeDTO findById(@PathVariable String id) {
+        EmployeeBO employeeBO = employeeService.queryById(id);
+        return EmployeeAdapterConvert.INSTANCE.toEmployeeDTO(employeeBO);
     }
 
     /**
@@ -56,7 +60,8 @@ public class EmployeeRPC implements EmployeeClient {
      *
      */
     @Override
-    public List<EmployeeDTO> list(EmployeeRPCListQuery query) {
+    @PostMapping("/list")
+    public List<EmployeeDTO> list(@RequestBody EmployeeRPCListQuery query) {
         EmployeeListQuery employeeListQuery = EmployeeRPCConvert.INSTANCE.toEmployeeListQuery(query);
         List<EmployeeBO> list = employeeService.list(employeeListQuery);
         return Optional.ofNullable(list).orElse(List.of()).stream().map(EmployeeAdapterConvert.INSTANCE::toEmployeeDTO).toList();

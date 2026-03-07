@@ -14,7 +14,6 @@ import java.util.List;
  * @author cy.Y
  * @since 1.0.0
  */
-@RequestMapping("/rpc/v1/employees")
 @FeignClient(name = "cyan-employee",contextId = "employeeClient", path = "/rpc/v1/employees", url = "${feign.cyan-employee.url}")
 public interface EmployeeClient {
 
@@ -28,7 +27,7 @@ public interface EmployeeClient {
      * 根据ID查询员工
      */
     @GetMapping("/{id}")
-    EmployeeDTO findById(@PathVariable Long id);
+    EmployeeDTO findById(@PathVariable String id);
 
     /**
      * 查询所有员工
