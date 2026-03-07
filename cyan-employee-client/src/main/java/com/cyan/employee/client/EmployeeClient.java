@@ -1,5 +1,6 @@
 package com.cyan.employee.client;
 
+import com.cyan.arch.common.api.Response;
 import com.cyan.employee.client.dto.EmployeeDTO;
 import com.cyan.employee.client.query.EmployeeRPCListQuery;
 import com.cyan.employee.client.query.EmployeeRPCQuery;
@@ -21,17 +22,17 @@ public interface EmployeeClient {
      * 查询员工
      */
     @GetMapping("/query")
-    EmployeeDTO query(EmployeeRPCQuery query);
+    Response<EmployeeDTO> query(EmployeeRPCQuery query);
 
     /**
      * 根据ID查询员工
      */
     @GetMapping("/{id}")
-    EmployeeDTO findById(@PathVariable String id);
+    Response<EmployeeDTO> findById(@PathVariable String id);
 
     /**
      * 查询所有员工
      */
     @PostMapping("/list")
-    List<EmployeeDTO> list(@RequestBody EmployeeRPCListQuery query);
+    Response<List<EmployeeDTO>> list(@RequestBody EmployeeRPCListQuery query);
 }

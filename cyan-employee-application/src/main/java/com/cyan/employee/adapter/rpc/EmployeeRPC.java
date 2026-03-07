@@ -1,5 +1,6 @@
 package com.cyan.employee.adapter.rpc;
 
+import com.cyan.arch.common.api.Response;
 import com.cyan.employee.adapter.http.employee.convert.EmployeeAdapterConvert;
 import com.cyan.employee.adapter.rpc.convert.EmployeeRPCConvert;
 import com.cyan.employee.application.employee.bo.EmployeeBO;
@@ -37,11 +38,12 @@ public class EmployeeRPC implements EmployeeClient {
      */
     @Override
     @GetMapping("/query")
-    public EmployeeDTO query(EmployeeRPCQuery query) {
+    public Response<EmployeeDTO> query(EmployeeRPCQuery query) {
         EmployeeQuery employeeQuery = new EmployeeQuery()
                 .setPassport(query.getPassport());
         EmployeeBO employeeBO = employeeService.queryOne(employeeQuery);
-        return EmployeeAdapterConvert.INSTANCE.toEmployeeDTO(employeeBO);
+        EmployeeDTO employeeDTO = EmployeeAdapterConvert.INSTANCE.toEmployeeDTO(employeeBO);
+        return Response.success(employeeDTO);
     }
 
     /**
@@ -50,9 +52,10 @@ public class EmployeeRPC implements EmployeeClient {
      */
     @Override
     @GetMapping("/{id}")
-    public EmployeeDTO findById(@PathVariable String id) {
+    public Response<EmployeeDTO> findById(@PathVariable String id) {
         EmployeeBO employeeBO = employeeService.queryById(id);
-        return EmployeeAdapterConvert.INSTANCE.toEmployeeDTO(employeeBO);
+        EmployeeDTO employeeDTO = EmployeeAdapterConvert.INSTANCE.toEmployeeDTO(employeeBO);
+        return Response.success(employeeDTO);
     }
 
     /**
@@ -61,9 +64,10 @@ public class EmployeeRPC implements EmployeeClient {
      */
     @Override
     @PostMapping("/list")
-    public List<EmployeeDTO> list(@RequestBody EmployeeRPCListQuery query) {
+    public Response<List<EmployeeDTO>> list(@RequestBody EmployeeRPCListQuery query) {
         EmployeeListQuery employeeListQuery = EmployeeRPCConvert.INSTANCE.toEmployeeListQuery(query);
         List<EmployeeBO> list = employeeService.list(employeeListQuery);
-        return Optional.ofNullable(list).orElse(List.of()).stream().map(EmployeeAdapterConvert.INSTANCE::toEmployeeDTO).toList();
+        List<EmployeeDTO> data = Optional.ofNullable(list).orElse(List.of()).stream().map(EmployeeAdapterConvert.INSTANCE::toEmployeeDTO).toList();
+        return Response.success(data);
     }
 }
