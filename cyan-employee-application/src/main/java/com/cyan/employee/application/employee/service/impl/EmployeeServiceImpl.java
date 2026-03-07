@@ -5,6 +5,7 @@ import com.cyan.employee.application.employee.cmd.EmployeeCmd;
 import com.cyan.employee.application.employee.convert.EmployeeAppConvert;
 import com.cyan.employee.application.employee.service.EmployeeService;
 import com.cyan.employee.domain.employee.Employee;
+import com.cyan.employee.domain.employee.query.EmployeeListQuery;
 import com.cyan.employee.domain.employee.query.EmployeeQuery;
 import com.cyan.employee.domain.employee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return 员工列表
      */
     @Override
-    public List<EmployeeBO> list() {
-        List<Employee> employees = employeeRepository.list();
+    public List<EmployeeBO> list(EmployeeListQuery query) {
+        List<Employee> employees = employeeRepository.list(query);
         return Optional.ofNullable(employees).orElse(List.of()).stream().map(EmployeeAppConvert.INSTANCE::toEmployeeBO).toList();
     }
 

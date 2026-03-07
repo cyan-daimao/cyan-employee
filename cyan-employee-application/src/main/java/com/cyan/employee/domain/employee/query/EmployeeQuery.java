@@ -33,4 +33,9 @@ public class EmployeeQuery {
      * 手机
      */
     private String phone;
+
+    /**
+     * 通行证
+     */
+    private String passport;
 }

@@ -2,6 +2,7 @@ package com.cyan.employee.application.employee.service;
 
 import com.cyan.employee.application.employee.bo.EmployeeBO;
 import com.cyan.employee.application.employee.cmd.EmployeeCmd;
+import com.cyan.employee.domain.employee.query.EmployeeListQuery;
 import com.cyan.employee.domain.employee.query.EmployeeQuery;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface EmployeeService {
      *
      * @return 员工列表
      */
-    List<EmployeeBO> list();
+    List<EmployeeBO> list(EmployeeListQuery employeeListQuery);
 
     /**
      * 保存员工

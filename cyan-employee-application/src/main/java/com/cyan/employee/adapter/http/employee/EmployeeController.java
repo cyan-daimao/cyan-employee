@@ -6,6 +6,7 @@ import com.cyan.employee.client.dto.EmployeeDTO;
 import com.cyan.employee.application.employee.bo.EmployeeBO;
 import com.cyan.employee.application.employee.cmd.EmployeeCmd;
 import com.cyan.employee.application.employee.service.EmployeeService;
+import com.cyan.employee.domain.employee.query.EmployeeListQuery;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,8 +44,8 @@ public class EmployeeController {
      * 获取员工列表
      */
     @GetMapping("/list")
-    public Response<List<EmployeeDTO>> list() {
-        List<EmployeeBO> list = employeeService.list();
+    public Response<List<EmployeeDTO>> list(EmployeeListQuery query) {
+        List<EmployeeBO> list = employeeService.list(query);
         List<EmployeeDTO> employeeDTOS = Optional.ofNullable(list).orElse(Collections.emptyList()).stream().map(EmployeeAdapterConvert.INSTANCE::toEmployeeDTO).toList();
         return Response.success(employeeDTOS);
     }

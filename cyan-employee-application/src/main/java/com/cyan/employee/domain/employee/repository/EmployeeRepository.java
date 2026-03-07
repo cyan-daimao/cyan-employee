@@ -1,6 +1,7 @@
 package com.cyan.employee.domain.employee.repository;
 
 import com.cyan.employee.domain.employee.Employee;
+import com.cyan.employee.domain.employee.query.EmployeeListQuery;
 import com.cyan.employee.domain.employee.query.EmployeeQuery;
 
 import java.util.List;
@@ -39,5 +40,5 @@ public interface EmployeeRepository {
     /**
      * 获取员工列表
      */
-    List<Employee> list();
+    List<Employee> list(EmployeeListQuery query);
 }

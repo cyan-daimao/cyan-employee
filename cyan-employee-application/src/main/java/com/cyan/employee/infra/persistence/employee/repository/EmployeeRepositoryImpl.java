@@ -1,8 +1,10 @@
 package com.cyan.employee.infra.persistence.employee.repository;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.cyan.arch.common.util.CollUtils;
 import com.cyan.arch.common.util.StrUtils;
 import com.cyan.employee.domain.employee.Employee;
+import com.cyan.employee.domain.employee.query.EmployeeListQuery;
 import com.cyan.employee.domain.employee.query.EmployeeQuery;
 import com.cyan.employee.domain.employee.repository.EmployeeRepository;
 import com.cyan.employee.infra.persistence.employee.convert.EmployeeInfraConvert;
@@ -71,8 +73,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
      * 获取员工列表
      */
     @Override
-    public List<Employee> list() {
-        List<EmployeeDO> employeeDOS = employeeMapper.selectList(null);
+    public List<Employee> list(EmployeeListQuery query) {
+        LambdaQueryWrapper<EmployeeDO> queryWrapper = new LambdaQueryWrapper<EmployeeDO>()
+                .in(CollUtils.isNotEmpty(query.getIds()), EmployeeDO::getId, query.getIds())
+                .in(CollUtils.isNotEmpty(query.getPassports()), EmployeeDO::getPassport, query.getPassports());
+        List<EmployeeDO> employeeDOS = employeeMapper.selectList(queryWrapper);
         return Optional.ofNullable(employeeDOS).orElse(List.of()).stream().map(EmployeeInfraConvert.INSTANCE::toEmployee).toList();
     }
 }
