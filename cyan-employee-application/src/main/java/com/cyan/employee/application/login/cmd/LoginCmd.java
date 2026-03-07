@@ -18,10 +18,10 @@ import lombok.experimental.Accessors;
 public class LoginCmd {
 
     /**
-     * 邮箱
+     * passport
      */
-    @NotBlank(message = "邮箱不能为空")
-    private String email;
+    @NotBlank(message = "passport不能为空")
+    private String passport;
 
     /**
      * 密码

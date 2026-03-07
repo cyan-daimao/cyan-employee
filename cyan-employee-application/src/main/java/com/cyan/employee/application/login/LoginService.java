@@ -13,11 +13,11 @@ public interface LoginService {
     /**
      * 登陆
      *
-     * @param email    邮箱
+     * @param passport    通行证
      * @param password 密码
      * @return token
      */
-    String login(String email, String password);
+    String login(String passport, String password);
 
     /**
      * 验证

@@ -37,13 +37,13 @@ public class LoginServiceImpl implements LoginService {
     /**
      * 登陆
      *
-     * @param email    邮箱
+     * @param passport    邮箱
      * @param password 密码
      * @return token
      */
     @Override
-    public String login(String email, String password) {
-        Employee employee = employeeRepository.findOne(new EmployeeQuery().setEmail(email));
+    public String login(String passport, String password) {
+        Employee employee = employeeRepository.findOne(new EmployeeQuery().setPassport(passport));
         if (employee == null){
             throw new SilentException("用户不存在");
         }

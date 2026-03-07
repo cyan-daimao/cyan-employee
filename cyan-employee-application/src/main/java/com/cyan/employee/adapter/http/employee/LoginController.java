@@ -30,7 +30,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     public Response<String> login(@RequestBody @Validated LoginCmd cmd) {
-        String token = loginService.login(cmd.getEmail(), cmd.getPassword());
+        String token = loginService.login(cmd.getPassport(), cmd.getPassword());
         return Response.success(token);
     }
 }
