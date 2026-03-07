@@ -5,6 +5,7 @@ import com.cyan.employee.client.dto.EmployeeDTO;
 import com.cyan.employee.client.query.EmployeeRPCListQuery;
 import com.cyan.employee.client.query.EmployeeRPCQuery;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface EmployeeClient {
      * 查询员工
      */
     @GetMapping("/query")
-    Response<EmployeeDTO> query(EmployeeRPCQuery query);
+    Response<EmployeeDTO> query(@SpringQueryMap EmployeeRPCQuery query);
 
     /**
      * 根据ID查询员工
