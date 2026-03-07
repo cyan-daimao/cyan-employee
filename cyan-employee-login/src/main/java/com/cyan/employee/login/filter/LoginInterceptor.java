@@ -8,6 +8,7 @@ import com.cyan.employee.client.dto.EmployeeDTO;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @since 1.0.0
  */
 @Component
+@Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
     @Autowired
     @Lazy
@@ -32,15 +34,12 @@ public class LoginInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Object handler) throws Exception {
-        // 示例：记录请求信息
-        String requestUri = request.getRequestURI();
-        String method = request.getMethod();
-        System.out.println("拦截到请求：" + method + " " + requestUri);
         String token = request.getHeader("Authorization");
         Response<EmployeeDTO> resp = loginClient.verify(token);
         if (ErrorCode.SUCCESS.getCode() != resp.getCode()) {
             throw new LoginException(resp.getMessage());
         }
+        log.info("拦截到请求：{} {} | 用户ID：{} | 客户端IP：{}", request.getMethod(), request.getRequestURI(), resp.getData().getPassport(),IpUtils.getRealIp(request));
         UserContextHolder.getContext().setEmployee(resp.getData()).setToken(token);
         return true;
     }
