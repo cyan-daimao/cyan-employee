@@ -33,7 +33,10 @@ public class LoginInterceptor implements HandlerInterceptor {
      * 请求处理前执行（核心方法，返回 true 放行，false 拦截）
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Object handler)  {
+        if ("OPTIONS".equals(request.getMethod())){
+            return true;
+        }
         String token = request.getHeader("Authorization");
         Response<EmployeeDTO> resp = loginClient.verify(token);
         if (ErrorCode.SUCCESS.getCode() != resp.getCode()) {
@@ -49,7 +52,7 @@ public class LoginInterceptor implements HandlerInterceptor {
      */
     @Override
     public void postHandle(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Object handler,
-                           @Nullable ModelAndView modelAndView) throws Exception {
+                           @Nullable ModelAndView modelAndView)  {
     }
 
     /**
@@ -58,7 +61,7 @@ public class LoginInterceptor implements HandlerInterceptor {
      */
     @Override
     public void afterCompletion(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable Object handler,
-                                @Nullable Exception ex) throws Exception {
+                                @Nullable Exception ex)  {
         UserContextHolder.clearContext();
     }
 }
