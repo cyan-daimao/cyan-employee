@@ -7,6 +7,7 @@ import com.cyan.employee.application.employee.bo.EmployeeBO;
 import com.cyan.employee.application.employee.cmd.EmployeeCmd;
 import com.cyan.employee.application.employee.service.EmployeeService;
 import com.cyan.employee.domain.employee.query.EmployeeListQuery;
+import com.cyan.employee.login.filter.UserContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,5 +59,14 @@ public class EmployeeController {
         EmployeeBO employeeBO = employeeService.queryById(id);
         EmployeeDTO employeeDTO = EmployeeAdapterConvert.INSTANCE.toEmployeeDTO(employeeBO);
         return Response.success(employeeDTO);
+    }
+
+    /**
+     * 获取当前员工
+     */
+    @GetMapping("/current")
+    public Response<EmployeeDTO> getCurrent() {
+        EmployeeDTO currentEmployee = UserContextHolder.getCurrentEmployee();
+        return Response.success(currentEmployee);
     }
 }
