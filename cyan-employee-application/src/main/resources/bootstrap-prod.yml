@@ -1,8 +1,8 @@
 spring:
   config:
     import:
-      - "nacos:arch-base.yaml?group=DEFAULT_GROUP&tenant=dev"
-      - "nacos:cyan-employee.yaml?group=DEFAULT_GROUP&tenant=dev"
+      - "nacos:arch-base.yaml?group=DEFAULT_GROUP&tenant=prod"
+      - "nacos:cyan-employee.yaml?group=DEFAULT_GROUP&tenant=prod"
   application:
     name: cyan-employee
   cloud:
@@ -14,11 +14,11 @@ spring:
       # 配置中心专项配置
       config:
         file-extension: yaml
-        namespace: dev
+        namespace: prod
       # 注册中心专项配置
       discovery:
         ephemeral: true
-        namespace: dev
+        namespace: prod
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
