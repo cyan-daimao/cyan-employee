@@ -1,5 +1,6 @@
 package com.cyan.employee.application.login.impl;
 
+import com.cyan.arch.common.api.Assert;
 import com.cyan.arch.common.api.SilentException;
 import com.cyan.employee.application.employee.bo.EmployeeBO;
 import com.cyan.employee.application.employee.convert.EmployeeAppConvert;
@@ -70,11 +71,10 @@ public class LoginServiceImpl implements LoginService {
     public EmployeeBO verify(String token) {
         try {
             TokenUtils.TokenParseResult tokenParseResult = tokenUtils.parseAndVerifyToken(token);
-            if (!tokenParseResult.isValid()){
-                throw new SilentException(tokenParseResult.getMsg());
-            }
+            Assert.isTrue(tokenParseResult.isValid(), new SilentException(tokenParseResult.getMsg()));
             String userId = tokenParseResult.getUserId();
             Employee employee = redisTemplate.opsForValue().get("cyan-employee:"+userId);
+            Assert.notNull(employee, new SilentException("登陆信息失效,请重新登录"));
             return EmployeeAppConvert.INSTANCE.toEmployeeBO(employee);
         } catch (Exception e) {
             throw new RuntimeException(e);
