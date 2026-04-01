@@ -41,4 +41,9 @@ public interface EmployeeRepository {
      * 获取员工列表
      */
     List<Employee> list(EmployeeListQuery query);
+
+    /**
+     * 获取员工数量
+     */
+    Long count(boolean containsDeleted);
 }

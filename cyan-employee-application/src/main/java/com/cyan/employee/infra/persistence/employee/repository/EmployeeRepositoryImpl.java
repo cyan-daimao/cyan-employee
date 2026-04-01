@@ -62,7 +62,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
      */
     @Override
     public Employee findOne(EmployeeQuery query) {
-        if (query.isEmpty()){
+        if (query.isEmpty()) {
             return null;
         }
         LambdaQueryWrapper<EmployeeDO> queryWrapper = new LambdaQueryWrapper<EmployeeDO>()
@@ -83,5 +83,17 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
                 .in(CollUtils.isNotEmpty(query.getPassports()), EmployeeDO::getPassport, query.getPassports());
         List<EmployeeDO> employeeDOS = employeeMapper.selectList(queryWrapper);
         return Optional.ofNullable(employeeDOS).orElse(List.of()).stream().map(EmployeeInfraConvert.INSTANCE::toEmployee).toList();
+    }
+
+    /**
+     * 获取员工数量
+     */
+    @Override
+    public Long count(boolean containsDeleted) {
+        LambdaQueryWrapper<EmployeeDO> queryWrapper = new LambdaQueryWrapper<>();
+        if (containsDeleted) {
+            queryWrapper.in(EmployeeDO::getDeletedAt, true, false);
+        }
+        return employeeMapper.selectCount(queryWrapper);
     }
 }

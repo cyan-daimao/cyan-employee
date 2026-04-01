@@ -93,9 +93,11 @@ public class Employee implements Serializable {
      * 保存
      */
     public Employee save(EmployeeRepository employeeRepository) {
-        if (StrUtils.isBlank(cnName) || StrUtils.isBlank(phone) || StrUtils.isBlank(email) || StrUtils.isBlank(jobTitle)) {
-            throw new SilentException("中文名,工号,手机号,邮箱，职位不能为空");
+        if (StrUtils.isBlank(cnName) || StrUtils.isBlank(enName)) {
+            throw new SilentException("中文名,英文名不能为空");
         }
+        Long count = employeeRepository.count(true);
+        this.staffNumber = count + 1 + "";
         this.passport = enName + staffNumber;
         return employeeRepository.save(this);
     }

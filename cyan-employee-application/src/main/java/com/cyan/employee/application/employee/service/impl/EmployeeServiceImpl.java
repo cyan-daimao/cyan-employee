@@ -1,5 +1,6 @@
 package com.cyan.employee.application.employee.service.impl;
 
+import com.cyan.arch.common.util.CollUtils;
 import com.cyan.employee.application.employee.bo.EmployeeBO;
 import com.cyan.employee.application.employee.cmd.EmployeeCmd;
 import com.cyan.employee.application.employee.convert.EmployeeAppConvert;
@@ -8,6 +9,7 @@ import com.cyan.employee.domain.employee.Employee;
 import com.cyan.employee.domain.employee.query.EmployeeListQuery;
 import com.cyan.employee.domain.employee.query.EmployeeQuery;
 import com.cyan.employee.domain.employee.repository.EmployeeRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +26,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
+    }
+
+    /**
+     * 初始化
+     * 如果一个员工也不存在默认创建一个admin员工
+     * 密码默认12345
+     */
+    @PostConstruct
+    public void init(){
+        List<EmployeeBO> list = this.list(new EmployeeListQuery());
+        if (CollUtils.isEmpty(list)){
+            save(new EmployeeCmd().setCnName("管理员").setEnName("cyan"));
+        }
     }
 
     /**

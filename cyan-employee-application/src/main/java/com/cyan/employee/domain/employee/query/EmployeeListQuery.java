@@ -27,4 +27,9 @@ public class EmployeeListQuery {
      * 员工通行证
      */
     private List<String> passports;
+
+    /**
+     * 是否包含已删除员工
+     */
+    private boolean containsDeleted;
 }
