@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
@@ -18,53 +19,79 @@ import java.util.UUID;
  */
 @Component
 public class TokenUtils {
-    // ========== 生产环境建议从配置中心读取 ==========
-    // AES密钥（16/24/32位，示例16位）
-    private static final String AES_SECRET_KEY = "Cyan@2025#AESKey";
-    // HMAC签名密钥（任意长度，示例32位）
-    private static final String HMAC_SECRET_KEY = "Cyan@2025#HMACKey12345678";
-    // 算法常量
+
+    /**
+     * AES加密密钥（16/24/32位）
+     */
+    @Value("${token.aes-secret-key}")
+    private String aesSecretKey;
+
+    /**
+     * HMAC签名密钥
+     */
+    @Value("${token.hmac-secret-key}")
+    private String hmacSecretKey;
+
+    /**
+     * AES加密算法
+     */
     private static final String AES_ALGORITHM = "AES/ECB/PKCS5Padding";
+
+    /**
+     * HMAC签名算法
+     */
     private static final String HMAC_ALGORITHM = "HmacSHA256";
 
-    // 生成UUID随机串（基础串）
+    /**
+     * 生成UUID随机串
+     */
     private String generateUUID() {
         return UUID.randomUUID().toString().replace("-", "");
     }
 
-    // AES加密（用户ID+时间戳）
+    /**
+     * AES加密（用户ID+时间戳）
+     */
     public String aesEncrypt(String content) throws Exception {
-        SecretKeySpec aesKey = new SecretKeySpec(AES_SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
+        SecretKeySpec aesKey = new SecretKeySpec(aesSecretKey.getBytes(StandardCharsets.UTF_8), "AES");
         Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, aesKey);
         byte[] encryptBytes = cipher.doFinal(content.getBytes(StandardCharsets.UTF_8));
         return Base64.encodeBase64String(encryptBytes);
     }
 
-    // AES解密
+    /**
+     * AES解密
+     */
     public String aesDecrypt(String encryptContent) throws Exception {
-        SecretKeySpec aesKey = new SecretKeySpec(AES_SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
+        SecretKeySpec aesKey = new SecretKeySpec(aesSecretKey.getBytes(StandardCharsets.UTF_8), "AES");
         Cipher cipher = Cipher.getInstance(AES_ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, aesKey);
         byte[] decryptBytes = cipher.doFinal(Base64.decodeBase64(encryptContent));
         return new String(decryptBytes, StandardCharsets.UTF_8);
     }
 
-    // HMAC-SHA256签名（防篡改）
+    /**
+     * HMAC-SHA256签名（防篡改）
+     */
     public String hmacSign(String content) throws Exception {
-        SecretKeySpec hmacKey = new SecretKeySpec(HMAC_SECRET_KEY.getBytes(StandardCharsets.UTF_8), HMAC_ALGORITHM);
+        SecretKeySpec hmacKey = new SecretKeySpec(hmacSecretKey.getBytes(StandardCharsets.UTF_8), HMAC_ALGORITHM);
         Mac mac = Mac.getInstance(HMAC_ALGORITHM);
         mac.init(hmacKey);
         byte[] signBytes = mac.doFinal(content.getBytes(StandardCharsets.UTF_8));
         return Base64.encodeBase64String(signBytes);
     }
 
-    // 验证签名
+    /**
+     * 验证签名
+     */
     public boolean verifySign(String content, String sign) throws Exception {
         return hmacSign(content).equals(sign);
     }
 
-    // ========== 核心：生成安全Token ==========
+    /**
+     * 生成安全Token
+     */
     public String generateToken(String userId) throws Exception {
         // 1. 构造待加密内容：用户ID + 时间戳（防重放）
         long timestamp = System.currentTimeMillis();
@@ -145,10 +172,21 @@ public class TokenUtils {
     @Data
     @Accessors(chain = true)
     public static class TokenParseResult {
+        /**
+         * 是否有效
+         */
         private boolean valid;
+        /**
+         * 用户ID
+         */
         private String userId;
+        /**
+         * UUID
+         */
         private String uuid;
+        /**
+         * 消息
+         */
         private String msg;
-
     }
 }

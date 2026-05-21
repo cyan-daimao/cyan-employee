@@ -1,7 +1,6 @@
 package com.cyan.employee.adapter.rpc;
 
 import com.cyan.arch.common.api.Response;
-import com.cyan.employee.adapter.http.employee.convert.EmployeeAdapterConvert;
 import com.cyan.employee.adapter.rpc.convert.EmployeeRPCConvert;
 import com.cyan.employee.application.employee.bo.EmployeeBO;
 import com.cyan.employee.application.employee.service.EmployeeService;
@@ -42,7 +41,7 @@ public class EmployeeRPC implements EmployeeClient {
         EmployeeQuery employeeQuery = new EmployeeQuery()
                 .setPassport(query.getPassport());
         EmployeeBO employeeBO = employeeService.queryOne(employeeQuery);
-        EmployeeDTO employeeDTO = EmployeeAdapterConvert.INSTANCE.toEmployeeDTO(employeeBO);
+        EmployeeDTO employeeDTO = EmployeeRPCConvert.INSTANCE.toEmployeeDTO(employeeBO);
         return Response.success(employeeDTO);
     }
 
@@ -54,7 +53,7 @@ public class EmployeeRPC implements EmployeeClient {
     @GetMapping("/{id}")
     public Response<EmployeeDTO> findById(@PathVariable String id) {
         EmployeeBO employeeBO = employeeService.queryById(id);
-        EmployeeDTO employeeDTO = EmployeeAdapterConvert.INSTANCE.toEmployeeDTO(employeeBO);
+        EmployeeDTO employeeDTO = EmployeeRPCConvert.INSTANCE.toEmployeeDTO(employeeBO);
         return Response.success(employeeDTO);
     }
 
@@ -67,7 +66,7 @@ public class EmployeeRPC implements EmployeeClient {
     public Response<List<EmployeeDTO>> list(@RequestBody EmployeeRPCListQuery query) {
         EmployeeListQuery employeeListQuery = EmployeeRPCConvert.INSTANCE.toEmployeeListQuery(query);
         List<EmployeeBO> list = employeeService.list(employeeListQuery);
-        List<EmployeeDTO> data = Optional.ofNullable(list).orElse(List.of()).stream().map(EmployeeAdapterConvert.INSTANCE::toEmployeeDTO).toList();
+        List<EmployeeDTO> data = Optional.ofNullable(list).orElse(List.of()).stream().map(EmployeeRPCConvert.INSTANCE::toEmployeeDTO).toList();
         return Response.success(data);
     }
 }

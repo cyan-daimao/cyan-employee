@@ -46,4 +46,19 @@ public interface EmployeeRepository {
      * 获取员工数量
      */
     Long count(boolean containsDeleted);
+
+    /**
+     * 更新员工
+     *
+     * @param employee 员工
+     * @return 员工
+     */
+    Employee update(Employee employee);
+
+    /**
+     * 根据id删除员工
+     *
+     * @param id 员工id
+     */
+    void deleteById(String id);
 }

@@ -44,12 +44,12 @@ public class Department {
     /**
      * 创建时间
      */
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     /**
      * 修改时间
      */
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
     /**
      * 删除时间
@@ -66,5 +66,25 @@ public class Department {
         }
         this.parentId = this.parentId == null ? 0 : this.parentId;
         return departmentRepository.save(this);
+    }
+
+    /**
+     * 更新
+     */
+    public Department update(DepartmentRepository departmentRepository) {
+        if (this.id == null) {
+            throw new SilentException("更新时id不能为空");
+        }
+        return departmentRepository.update(this);
+    }
+
+    /**
+     * 删除
+     */
+    public void delete(DepartmentRepository departmentRepository) {
+        if (this.id == null) {
+            throw new SilentException("删除时id不能为空");
+        }
+        departmentRepository.deleteById(this.id + "");
     }
 }

@@ -1,6 +1,8 @@
 package com.cyan.employee.adapter.rpc.convert;
 
 import com.cyan.arch.common.mapstruct.MapstructConvert;
+import com.cyan.employee.application.employee.bo.EmployeeBO;
+import com.cyan.employee.client.dto.EmployeeDTO;
 import com.cyan.employee.client.query.EmployeeRPCListQuery;
 import com.cyan.employee.domain.employee.query.EmployeeListQuery;
 import org.mapstruct.Mapper;
@@ -17,4 +19,6 @@ public interface EmployeeRPCConvert {
     EmployeeRPCConvert INSTANCE = Mappers.getMapper(EmployeeRPCConvert.class);
 
     EmployeeListQuery toEmployeeListQuery(EmployeeRPCListQuery query);
+
+    EmployeeDTO toEmployeeDTO(EmployeeBO employeeBO);
 }

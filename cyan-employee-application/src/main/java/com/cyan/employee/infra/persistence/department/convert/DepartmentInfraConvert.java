@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * @author cy.Y
  */
-@Mapper(uses = MapstructConvert.class)
+@Mapper(componentModel = "spring", uses = MapstructConvert.class)
 public interface DepartmentInfraConvert {
 
    DepartmentInfraConvert INSTANCE = Mappers.getMapper(DepartmentInfraConvert.class);

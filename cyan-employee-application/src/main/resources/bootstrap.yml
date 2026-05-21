@@ -14,6 +14,11 @@ management:
     health:
       show-details: always
 
+# Token 安全配置
+token:
+  aes-secret-key: Cyan@2025#AESKey
+  hmac-secret-key: Cyan@2025#HMACKey12345678
+
 # 日志配置（关联logback）
 #logging:
 #  config: classpath:logback-spring.xml

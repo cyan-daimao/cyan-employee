@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
  * @author cy.Y
  * @version 1.0.0
  */
-@Mapper(uses = MapstructConvert.class)
+@Mapper(componentModel = "spring", uses = MapstructConvert.class)
 public interface EmployeeAdapterConvert {
 
     EmployeeAdapterConvert INSTANCE = Mappers.getMapper(EmployeeAdapterConvert.class);

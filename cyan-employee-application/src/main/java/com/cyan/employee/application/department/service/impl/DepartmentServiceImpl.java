@@ -71,6 +71,9 @@ public class DepartmentServiceImpl implements DepartmentService {
      */
     @Override
     public void remove(DepartmentCmd cmd) {
-        departmentRepository.deleteById(cmd.getId());
+        Department department = departmentRepository.findById(cmd.getId());
+        if (department != null) {
+            department.delete(departmentRepository);
+        }
     }
 }

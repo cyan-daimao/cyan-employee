@@ -91,9 +91,33 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public Long count(boolean containsDeleted) {
         LambdaQueryWrapper<EmployeeDO> queryWrapper = new LambdaQueryWrapper<>();
-        if (containsDeleted) {
-            queryWrapper.in(EmployeeDO::getDeletedAt, true, false);
+        if (!containsDeleted) {
+            queryWrapper.isNull(EmployeeDO::getDeletedAt);
         }
         return employeeMapper.selectCount(queryWrapper);
+    }
+
+    /**
+     * 更新员工
+     *
+     * @param employee 员工
+     * @return 员工
+     */
+    @Override
+    public Employee update(Employee employee) {
+        EmployeeDO employeeDO = EmployeeInfraConvert.INSTANCE.toEmployeeDO(employee);
+        employeeMapper.updateById(employeeDO);
+        employeeDO = employeeMapper.selectById(employeeDO.getId());
+        return EmployeeInfraConvert.INSTANCE.toEmployee(employeeDO);
+    }
+
+    /**
+     * 根据id删除员工
+     *
+     * @param id 员工id
+     */
+    @Override
+    public void deleteById(String id) {
+        employeeMapper.deleteById(id);
     }
 }

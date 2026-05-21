@@ -57,7 +57,7 @@ public class DepartmentController {
      * @return 部门列表
      */
     @GetMapping("/query")
-    public Response<DepartmentDTO> query(@RequestBody DepartmentQuery query) {
+    public Response<DepartmentDTO> query(@ModelAttribute DepartmentQuery query) {
         DepartmentBO departmentBO = departmentService.queryOne(query);
         DepartmentDTO departmentDTO = DepartmentAdapterConvert.INSTANCE.toDepartmentDTO(departmentBO);
         return Response.success(departmentDTO);
@@ -67,7 +67,7 @@ public class DepartmentController {
      * 查询部门列表
      */
     @GetMapping("/list")
-    public Response<List<DepartmentDTO>> list(@RequestBody DepartmentQuery query) {
+    public Response<List<DepartmentDTO>> list(@ModelAttribute DepartmentQuery query) {
         List<DepartmentBO> departmentBOList = departmentService.list(query);
         List<DepartmentDTO> list = Optional.ofNullable(departmentBOList).orElse(List.of()).stream().map(DepartmentAdapterConvert.INSTANCE::toDepartmentDTO).toList();
         return Response.success(list);

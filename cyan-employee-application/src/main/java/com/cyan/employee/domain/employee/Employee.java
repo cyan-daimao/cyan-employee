@@ -101,4 +101,24 @@ public class Employee implements Serializable {
         this.passport = enName + staffNumber;
         return employeeRepository.save(this);
     }
+
+    /**
+     * 更新
+     */
+    public Employee update(EmployeeRepository employeeRepository) {
+        if (StrUtils.isBlank(this.id)) {
+            throw new SilentException("更新时id不能为空");
+        }
+        return employeeRepository.update(this);
+    }
+
+    /**
+     * 删除
+     */
+    public void delete(EmployeeRepository employeeRepository) {
+        if (StrUtils.isBlank(this.id)) {
+            throw new SilentException("删除时id不能为空");
+        }
+        employeeRepository.deleteById(this.id);
+    }
 }

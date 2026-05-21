@@ -38,7 +38,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
     @Override
     public Department findById(String id) {
         DepartmentDO departmentDO = departmentMapper.selectById(id);
-        return null;
+        return DepartmentInfraConvert.INSTANCE.toDepartment(departmentDO);
     }
 
     /**
@@ -63,7 +63,10 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
      */
     @Override
     public Department update(Department department) {
-        return null;
+        DepartmentDO departmentDO = DepartmentInfraConvert.INSTANCE.toDepartmentDO(department);
+        departmentMapper.updateById(departmentDO);
+        departmentDO = departmentMapper.selectById(departmentDO.getId());
+        return DepartmentInfraConvert.INSTANCE.toDepartment(departmentDO);
     }
 
     /**
