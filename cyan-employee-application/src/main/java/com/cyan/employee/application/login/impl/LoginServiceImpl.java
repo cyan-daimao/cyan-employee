@@ -73,11 +73,29 @@ public class LoginServiceImpl implements LoginService {
             TokenUtils.TokenParseResult tokenParseResult = tokenUtils.parseAndVerifyToken(token);
             Assert.isTrue(tokenParseResult.isValid(), new SilentException(tokenParseResult.getMsg()));
             String userId = tokenParseResult.getUserId();
-            Employee employee = redisTemplate.opsForValue().get("cyan-employee:"+userId);
+            Employee employee = getEmployeeFromCache(userId);
             Assert.notNull(employee, new SilentException("登陆信息失效,请重新登录"));
             return EmployeeAppConvert.INSTANCE.toEmployeeBO(employee);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 从缓存获取员工，兼容序列化版本变更：反序列化失败时自动从数据库重新加载并刷新缓存
+     */
+    private Employee getEmployeeFromCache(String userId) {
+        String cacheKey = "cyan-employee:" + userId;
+        try {
+            return redisTemplate.opsForValue().get(cacheKey);
+        } catch (Exception e) {
+            // 序列化异常（如类结构变更导致 serialVersionUID 不匹配），删除旧缓存并从数据库重新加载
+            redisTemplate.delete(cacheKey);
+            Employee employee = employeeRepository.findById(userId);
+            if (employee != null) {
+                redisTemplate.opsForValue().set(cacheKey, employee, 30, TimeUnit.DAYS);
+            }
+            return employee;
         }
     }
 }
