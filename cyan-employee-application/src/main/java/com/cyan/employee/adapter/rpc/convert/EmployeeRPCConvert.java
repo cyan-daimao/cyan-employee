@@ -1,6 +1,6 @@
 package com.cyan.employee.adapter.rpc.convert;
 
-import com.cyan.arch.common.mapstruct.MapstructConvert;
+import com.cyan.arch.base.mapstruct.MapstructConvert;
 import com.cyan.employee.application.employee.bo.EmployeeBO;
 import com.cyan.employee.client.dto.EmployeeDTO;
 import com.cyan.employee.client.query.EmployeeRPCListQuery;

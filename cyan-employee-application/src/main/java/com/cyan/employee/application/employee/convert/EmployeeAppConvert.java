@@ -1,6 +1,6 @@
 package com.cyan.employee.application.employee.convert;
 
-import com.cyan.arch.common.mapstruct.MapstructConvert;
+import com.cyan.arch.base.mapstruct.MapstructConvert;
 import com.cyan.employee.application.department.bo.DepartmentBO;
 import com.cyan.employee.application.employee.bo.EmployeeBO;
 import com.cyan.employee.application.employee.cmd.EmployeeCmd;

@@ -1,6 +1,6 @@
 package com.cyan.employee.infra.persistence.employee.convert;
 
-import com.cyan.arch.common.mapstruct.MapstructConvert;
+import com.cyan.arch.base.mapstruct.MapstructConvert;
 import com.cyan.employee.domain.employee.Employee;
 import com.cyan.employee.infra.persistence.employee.dos.EmployeeDO;
 import org.mapstruct.Mapper;

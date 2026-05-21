@@ -1,6 +1,6 @@
 package com.cyan.employee.adapter.http.employee.convert;
 
-import com.cyan.arch.common.mapstruct.MapstructConvert;
+import com.cyan.arch.base.mapstruct.MapstructConvert;
 import com.cyan.employee.client.dto.EmployeeDTO;
 import com.cyan.employee.application.employee.bo.EmployeeBO;
 import org.mapstruct.Mapper;
