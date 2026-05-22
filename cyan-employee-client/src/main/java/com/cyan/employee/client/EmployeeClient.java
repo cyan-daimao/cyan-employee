@@ -16,7 +16,7 @@ import java.util.List;
  * @author cy.Y
  * @since 1.0.0
  */
-@FeignClient(name = "cyan-employee",contextId = "employeeClient", path = "/rpc/v1/employees", url = "${feign.cyan-employee.url}")
+@FeignClient(name = "cyan-employee", contextId = "employeeClient", path = "/rpc/v1/employees", url = "${feign.cyan-employee.url:}")
 public interface EmployeeClient {
 
     /**

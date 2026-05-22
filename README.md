@@ -111,7 +111,7 @@ java -jar cyan-employee-application/target/cyan-employee.jar \
 ```
 
 ```java
-@FeignClient(name = "cyan-employee", path = "/api/employee")
+@FeignClient(name = "cyan-employee", contextId = "employeeClient", path = "/api/employee", url = "${feign.cyan-employee.url:}")
 public interface EmployeeClient extends EmployeeApi {
 }
 ```
